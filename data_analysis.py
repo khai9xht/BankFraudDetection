@@ -47,4 +47,5 @@ def analysis_basic(df:pd.core.frame.DataFrame):
 if __name__ == "__main__":
     path = "/home/hoangnv68/BankFraudDetection/creditcard.csv"
     df = read_data(path)
+    
     analysis_basic(df)
