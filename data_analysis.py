@@ -2,11 +2,7 @@ import pandas as pd
 import os
 import matplotlib.pyplot as plt
 import seaborn as sns
-from utils import downsample_data
-
-def read_data(path):
-    df = pd.read_csv(path)
-    return df
+from utils import Downsample_data
 
 def analysis_basic(df:pd.core.frame.DataFrame):
     print("example instances in data:\n", df.head())
