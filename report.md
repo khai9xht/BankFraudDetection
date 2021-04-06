@@ -86,6 +86,7 @@ Example in [kaggle](https://www.kaggle.com/mlg-ulb/creditcardfraud)
 - Deep learning (SMOTE)
   
 Neurol Network architecturte
+
 ![](NN_architecture.png)
 
 Loss: Sparse categorical crossentropy.
