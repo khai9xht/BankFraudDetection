@@ -57,29 +57,29 @@ Example in [kaggle](https://www.kaggle.com/mlg-ulb/creditcardfraud)
 - 284807 transcations: 284315 Non-Frauds (normal transaction)(99.828%) and 492 Frauds (0.172%)
 - 30 fields in which 28 fields are transformed from original features by PCA. Only 2 original fields are "Time" (seconds elapsed between each transaction and the first transaction) and "amount" (transaction amount)
 
-<div style="text-align:center"><img src="class_distributions.png" /></div>
+<div style="text-align:center"><img src="image_evaluation/class_distributions.png" /></div>
 <p style="text-align: center;">visualize class distributions of data</p>
 </br>
-<div style="text-align:center"><img src="correlation_matrix.png" /></div>
+<div style="text-align:center"><img src="image_evaluation/correlation_matrix.png" /></div>
 <p style="text-align: center;">correlation matrix of subsample data</p>
 
 > 
 > **method**
 - Machine learning algorithm
 
-<div style="text-align:center"><img src="logisticvsKNN.png" /></div>
+<div style="text-align:center"><img src="image_evaluation/logisticvsKNN.png" /></div>
 <p style="text-align: center;">Logistic Regression (left) and K Nearest Neighbors (right)</p>
 </br></br>
 
-<div style="text-align:center"><img src="SVCvsDTC.png" /></div>
+<div style="text-align:center"><img src="image_evaluation/SVCvsDTC.png" /></div>
 <p style="text-align: center;">Sunport Vector Classifier (left) and Decision Tree Classifier (right)</p>
 </br></br>
 
-<div style="text-align:center"><img src="confusion_matrix.png" /></div>
+<div style="text-align:center"><img src="image_evaluation/confusion_matrix.png" /></div>
 <p style="text-align: center;"> Models comparison with confusion matrix</p>
 </br></br>
 
-<div style="text-align:center"><img src="ROC_Curve.png" /></div>
+<div style="text-align:center"><img src="image_evaluation/ROC_Curve.png" /></div>
 </br></br></br>
 
 - Deep learning use SMOTE
@@ -96,7 +96,7 @@ metrics: accuracy
 
 epochs: 20
 
-<div style="text-align:center"><img src="dense_NN.png" /></div>
+<div style="text-align:center"><img src="image_evaluation/dense_NN.png" /></div>
 <p style="text-align: center;"> evaluate Neurol Network model</p>
 
 </br></br></br>
