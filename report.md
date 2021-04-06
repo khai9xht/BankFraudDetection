@@ -26,7 +26,7 @@ Type of bank fraud:
     1.  Application fraud
     2.  Account takeover
     3.  Fake or counterfeit cards
-17. __Phishing or Internet fraud__
+17. Phishing or Internet fraud
     1.  Site cloning
     2.  False merchant sites
     3.  Credit card generators
