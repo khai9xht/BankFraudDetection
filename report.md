@@ -9,7 +9,7 @@ Type of bank fraud:
 
 1. Accounting fraud
 2. Demand draft fraud
-3. Remotely created check fraud
+3. __Remotely created check fraud__
 4. Uninsured deposits
 5. __Bill discounting fraud__
 6. __Duplication or skimming of card information__
@@ -20,8 +20,8 @@ Type of bank fraud:
 11. __Fraudulent loans__
 12. Empty ATM envelope deposits
 13. The fictitious 'bank inspector'
-14. Identity theft or Impersonation
-15. Money laundering
+14. __Identity theft or Impersonation__
+15. __Money laundering__
 16. __Payment card fraud__
     1.  Application fraud
     2.  Account takeover
@@ -30,9 +30,8 @@ Type of bank fraud:
     1.  Site cloning
     2.  False merchant sites
     3.  Credit card generators
-18. Prime bank fraud
-19. Rogue traders
-20. Stolen checks
+18. __Rogue traders__
+19. Stolen checks
 21. __Wire transfer fraud__
 
 - Existing application: freedzai, datavisor, teradata
