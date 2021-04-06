@@ -83,7 +83,7 @@ Example in [kaggle](https://www.kaggle.com/mlg-ulb/creditcardfraud)
 <div style="text-align:center"><img src="ROC_Curve.png" /></div>
 </br></br></br>
 
-- Deep learning (SMOTE)
+- Deep learning use SMOTE
   
 Neurol Network architecturte
 
