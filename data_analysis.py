@@ -2,7 +2,7 @@ import pandas as pd
 import os
 import matplotlib.pyplot as plt
 import seaborn as sns
-from utils import Downsample_data
+from utils import Downsample_data, read_data
 
 def analysis_basic(df:pd.core.frame.DataFrame):
     print("example instances in data:\n", df.head())
@@ -20,7 +20,7 @@ def analysis_basic(df:pd.core.frame.DataFrame):
     plt.savefig("image_evaluation/class_distributions.png")
     plt.cla()
 
-    sub_df = downsample_data(df)
+    sub_df = Downsample_data(df)
     # print(len(sub_df.loc[sub_df["Class"]==1]))
     sns.countplot('Class', data=sub_df, palette=colors)
     plt.title('Class Distributions \n (0: No Fraud || 1: Fraud)', fontsize=14)

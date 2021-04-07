@@ -7,3 +7,4 @@ keras
 tqdm
 seaborn
 keras-metrics
+imblearn
