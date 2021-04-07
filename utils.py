@@ -6,6 +6,8 @@ import matplotlib.patches as mpatches
 import time
 from sklearn.manifold import TSNE
 from sklearn.decomposition import PCA, TruncatedSVD
+from sklearn.model_selection import train_test_split
+
 
 def read_data(path):
     df = pd.read_csv(path)
@@ -43,3 +45,11 @@ def Remove_ouliers(df, fields, min_thresh, max_thresh, r):
 
     return df
 
+def convert_data(X, y, ratio=0.2):
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=ratio, random_state=42)    
+    X_train = X_train.values
+    X_test = X_test.values
+    y_train = y_train.values
+    y_test = y_test.values
+
+    return X_train,  X_test, y_train, y_test
