@@ -1,6 +1,7 @@
 import sys
 sys.path.append("/home/hoangnv68/BankFraudDetection")
 
+import os
 import joblib
 from sklearn.metrics import confusion_matrix, roc_curve, roc_auc_score, \
         precision_recall_curve, recall_score, precision_score, f1_score, accuracy_score
@@ -26,13 +27,16 @@ def ROC_Curve(log_reg, knears_neighbors, svc, tree_clf, X_train, y_train):
     print("Logistic Regression")
     log_reg_pred = cross_val_predict(log_reg, X_train, y_train, cv=5,
                              method="decision_function")
+
     print('-'*60)
     print("K Neirest Neighbors")
     knears_pred = cross_val_predict(knears_neighbors, X_train, y_train, cv=5)
+
     print('-'*60)
     print("Support vector classifier")
     svc_pred = cross_val_predict(svc, X_train, y_train, cv=5,
                                 method="decision_function")
+
     print('-'*60)
     print("Decision Tree Classifier")
     tree_pred = cross_val_predict(tree_clf, X_train, y_train, cv=5)
@@ -67,12 +71,18 @@ if __name__ == "__main__":
 
     X_train, X_test, y_train, y_test = convert_data(X, y)
 
-    log_reg = joblib.load("/home/hoangnv68/BankFraudDetection/supervise_model/pretrained_model/lgr_gridsearchcv.joblib")
-    knears_neighbors = joblib.load("/home/hoangnv68/BankFraudDetection/supervise_model/pretrained_model/knn_gridsearchcv.joblib")
-    svc = joblib.load("/home/hoangnv68/BankFraudDetection/supervise_model/pretrained_model/svc_gridsearchcv.joblib")
-    tree_clf = joblib.load("/home/hoangnv68/BankFraudDetection/supervise_model/pretrained_model/dt_gridsearchcv.joblib")
+    base_path = "/home/hoangnv68/BankFraudDetection"
+    log_red_path = "supervise_model/pretrained_model/lgr_gridsearchcv.joblib"
+    knears_neighbors_path = "supervise_model/pretrained_model/KNearest.joblib"
+    svc_path = "supervise_model/pretrained_model/svc_gridsearchcv.joblib"
+    tree_clf_path = "supervise_model/pretrained_model/dt_gridsearchcv.joblib"
+    
+    log_reg = joblib.load(os.path.join(base_path, log_red_path))
+    knears_neighbors = joblib.load(os.path.join(base_path, knears_neighbors_path))
+    svc = joblib.load(os.path.join(base_path, svc_path))
+    tree_clf = joblib.load(os.path.join(base_path, tree_clf_path))
 
     learn_curve(log_reg, knears_neighbors, svc, tree_clf, X_train, y_train)
-    ROC_Curve(log_reg, knears_neighbors, svc, tree_clf, X_train, y_train)
+    # ROC_Curve(log_reg, knears_neighbors, svc, tree_clf, X_train, y_train)
 
     
