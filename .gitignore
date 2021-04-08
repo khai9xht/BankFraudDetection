@@ -1,2 +1,4 @@
 archive.zip
 creditcard.csv
+NN_model/pretrained_model/
+supervise_model/pretrained_model/

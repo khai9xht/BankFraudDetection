@@ -1,3 +1,6 @@
+import sys
+sys.path.append("/home/hoangnv68/BankFraudDetection")
+
 import pandas as pd
 import seaborn as sns
 import numpy as np
@@ -6,7 +9,6 @@ import matplotlib.patches as mpatches
 import time
 from sklearn.manifold import TSNE
 from sklearn.decomposition import PCA, TruncatedSVD
-
 from utils import Downsample_data, Remove_ouliers, read_data
 
 def Clustering(X:pd.core.frame.DataFrame):
@@ -66,10 +68,10 @@ def visualize_clustering(X_reduced_tsne, X_reduced_pca, X_reduced_svd, y):
 
     ax3.legend(handles=[blue_patch, red_patch])
 
-    plt.savefig("image_evaluation/clustering.png")
+    plt.savefig("/home/hoangnv68/BankFraudDetection/image_evaluation/clustering.png")
 
 if __name__ == "__main__":
-    path = "creditcard.csv"
+    path = "/home/hoangnv68/BankFraudDetection/creditcard.csv"
     df = read_data(path)
     sub_df = Downsample_data(df)
     sub_df = Remove_ouliers(sub_df, ["V14", "V12", "V10"], 25, 75, 1.5)

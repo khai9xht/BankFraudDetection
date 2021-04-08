@@ -3,8 +3,7 @@ sys.path.append("/home/hoangnv68/BankFraudDetection")
 
 import os
 import joblib
-from sklearn.metrics import confusion_matrix, roc_curve, roc_auc_score, \
-        precision_recall_curve, recall_score, precision_score, f1_score, accuracy_score
+from sklearn.metrics import confusion_matrix, roc_curve, roc_auc_score
 from sklearn.model_selection import ShuffleSplit, learning_curve, cross_val_predict
 from utils import plot_learning_curve, graph_roc_curve_multiple, \
             read_data, Downsample_data, Remove_ouliers, convert_data
@@ -83,6 +82,6 @@ if __name__ == "__main__":
     tree_clf = joblib.load(os.path.join(base_path, tree_clf_path))
 
     learn_curve(log_reg, knears_neighbors, svc, tree_clf, X_train, y_train)
-    # ROC_Curve(log_reg, knears_neighbors, svc, tree_clf, X_train, y_train)
+    ROC_Curve(log_reg, knears_neighbors, svc, tree_clf, X_train, y_train)
 
     

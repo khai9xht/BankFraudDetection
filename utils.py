@@ -2,12 +2,8 @@ import pandas as pd
 import seaborn as sns
 import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib.patches as mpatches
 import time
-from sklearn.manifold import TSNE
-from sklearn.decomposition import PCA, TruncatedSVD
-from sklearn.model_selection import train_test_split, StratifiedKFold, \
-                ShuffleSplit, learning_curve
+from sklearn.model_selection import train_test_split, StratifiedKFold, learning_curve
 from imblearn.under_sampling import NearMiss
 from sklearn.metrics import roc_auc_score
 
@@ -56,166 +52,68 @@ def convert_data(X, y, ratio=0.2):
 
     return X_train,  X_test, y_train, y_test
 
-def plot_learning_curve_per_ax():
-    print("Learning curve completely.")
+def plot_learning_curve_per_ax(estimator, ax, X, y, cv=None, n_jobs=1, train_sizes=np.linspace(.1, 1.0, 5)):
+    train_sizes, train_scores, test_scores = learning_curve(\
+        estimator, X, y, cv=cv, n_jobs=n_jobs, train_sizes=train_sizes)
     train_scores_mean = np.mean(train_scores, axis=1)
     train_scores_std = np.std(train_scores, axis=1)
     test_scores_mean = np.mean(test_scores, axis=1)
     test_scores_std = np.std(test_scores, axis=1)
-    print("train size: ", train_sizes)
+    print("train_sizes: ", train_sizes)
     print("train_scores_mean: ", train_scores_mean)
     print("train_scores_std: ", train_scores_std)
     print("test_scores_mean: ", test_scores_mean)
     print("test_scores_std: ", test_scores_std)
-    ax1.fill_between(train_sizes, train_scores_mean - train_scores_std,
-                     train_scores_mean + train_scores_std, alpha=0.1,
-                     color="#ff9124")
-    ax1.fill_between(train_sizes, test_scores_mean - test_scores_std,
-                     test_scores_mean + test_scores_std, alpha=0.1, color="#2492ff")
-    ax1.plot(train_sizes, train_scores_mean, 'o-', color="#ff9124",
-             label="Training score")
-    ax1.plot(train_sizes, test_scores_mean, 'o-', color="#2492ff",
-             label="Cross-validation score")
-    ax1.set_title("Logistic Regression Learning Curve", fontsize=14)
-    ax1.set_xlabel('Training size (m)')
-    ax1.set_ylabel('Score')
-    ax1.grid(True)
-    ax1.legend(loc="best")
+
+    lower_train = train_scores_mean - train_scores_std
+    lower_test = test_scores_mean - test_scores_std
+    upper_train = train_scores_mean + train_scores_std
+    upper_test = test_scores_mean + test_scores_std
+    ax.fill_between(train_sizes, lower_train, upper_train, alpha=0.1, color="r")
+    ax.fill_between(train_sizes, lower_test, upper_test, alpha=0.1, color="g")
+    ax.plot(train_sizes, train_scores_mean, 'o-', color="r", label="Training score")
+    ax.plot(train_sizes, test_scores_mean, 'o-', color="g", label="Cross-validation score")
+    ax.set_xlabel('Training size (m)')
+    ax.set_ylabel('Score')
+    ax.grid(True)
+    ax.legend(loc="best")
     print('-'*60)
-    
+
 def plot_learning_curve(estimator1, estimator2, estimator3, estimator4, X, y, ylim=None, cv=None,
                         n_jobs=1, train_sizes=np.linspace(.1, 1.0, 5)):
+    plt.cla()
     f, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2,2, figsize=(20,14), sharey=True)
     if ylim is not None:
         plt.ylim(*ylim)
     print('-'*60)
     print("Logistic Regression")
-    train_sizes, train_scores, test_scores = learning_curve(
-        estimator1, X, y, cv=cv, n_jobs=n_jobs, train_sizes=train_sizes)
-    print("Learning curve completely.")
-    train_scores_mean = np.mean(train_scores, axis=1)
-    train_scores_std = np.std(train_scores, axis=1)
-    test_scores_mean = np.mean(test_scores, axis=1)
-    test_scores_std = np.std(test_scores, axis=1)
-    print("train size: ", train_sizes)
-    print("train_scores_mean: ", train_scores_mean)
-    print("train_scores_std: ", train_scores_std)
-    print("test_scores_mean: ", test_scores_mean)
-    print("test_scores_std: ", test_scores_std)
-    ax1.fill_between(train_sizes, train_scores_mean - train_scores_std,
-                     train_scores_mean + train_scores_std, alpha=0.1,
-                     color="#ff9124")
-    ax1.fill_between(train_sizes, test_scores_mean - test_scores_std,
-                     test_scores_mean + test_scores_std, alpha=0.1, color="#2492ff")
-    ax1.plot(train_sizes, train_scores_mean, 'o-', color="#ff9124",
-             label="Training score")
-    ax1.plot(train_sizes, test_scores_mean, 'o-', color="#2492ff",
-             label="Cross-validation score")
     ax1.set_title("Logistic Regression Learning Curve", fontsize=14)
-    ax1.set_xlabel('Training size (m)')
-    ax1.set_ylabel('Score')
-    ax1.grid(True)
-    ax1.legend(loc="best")
-    print('-'*60)
+    plot_learning_curve_per_ax(estimator1, ax1, X, y)
 
     # Second Estimator 
     print('-'*60)
     print("Knears neighbors ...")
-    train_sizes, train_scores, test_scores = learning_curve(
-        estimator2, X, y, cv=cv, n_jobs=n_jobs, train_sizes=train_sizes)
-    print("Learning curve completely.")
-    train_scores_mean = np.mean(train_scores, axis=1)
-    train_scores_std = np.std(train_scores, axis=1)
-    test_scores_mean = np.mean(test_scores, axis=1)
-    test_scores_std = np.std(test_scores, axis=1)
-    print("train size: ", train_sizes)
-    print("train_scores_mean: ", train_scores_mean)
-    print("train_scores_std: ", train_scores_std)
-    print("test_scores_mean: ", test_scores_mean)
-    print("test_scores_std: ", test_scores_std)
-    ax2.fill_between(train_sizes, train_scores_mean - train_scores_std,
-                     train_scores_mean + train_scores_std, alpha=0.1,
-                     color="#ff9124")
-    ax2.fill_between(train_sizes, test_scores_mean - test_scores_std,
-                     test_scores_mean + test_scores_std, alpha=0.1, color="#2492ff")
-    ax2.plot(train_sizes, train_scores_mean, 'o-', color="#ff9124",
-             label="Training score")
-    ax2.plot(train_sizes, test_scores_mean, 'o-', color="#2492ff",
-             label="Cross-validation score")
-    ax2.set_title("Knears Neighbors Learning Curve", fontsize=14)
-    ax2.set_xlabel('Training size (m)')
-    ax2.set_ylabel('Score')
-    ax2.grid(True)
-    ax2.legend(loc="best")
-    print('-'*60)
+    ax2.set_title("K Nearest Neighbors Learning Curve", fontsize=14)
+    plot_learning_curve_per_ax(estimator2, ax2, X, y)
 
     # Third Estimator
     print('-'*60)
-    print("Suport Vector Classifier ...")
-    train_sizes, train_scores, test_scores = learning_curve(
-        estimator3, X, y, cv=cv, n_jobs=n_jobs, train_sizes=train_sizes)
-    print("Learning curve completely.")
-    train_scores_mean = np.mean(train_scores, axis=1)
-    train_scores_std = np.std(train_scores, axis=1)
-    test_scores_mean = np.mean(test_scores, axis=1)
-    test_scores_std = np.std(test_scores, axis=1)
-    print("train size: ", train_sizes)
-    print("train_scores_mean: ", train_scores_mean)
-    print("train_scores_std: ", train_scores_std)
-    print("test_scores_mean: ", test_scores_mean)
-    print("test_scores_std: ", test_scores_std)
-    ax3.fill_between(train_sizes, train_scores_mean - train_scores_std,
-                     train_scores_mean + train_scores_std, alpha=0.1,
-                     color="#ff9124")
-    ax3.fill_between(train_sizes, test_scores_mean - test_scores_std,
-                     test_scores_mean + test_scores_std, alpha=0.1, color="#2492ff")
-    ax3.plot(train_sizes, train_scores_mean, 'o-', color="#ff9124",
-             label="Training score")
-    ax3.plot(train_sizes, test_scores_mean, 'o-', color="#2492ff",
-             label="Cross-validation score")
-    ax3.set_title("Support Vector Classifier \n Learning Curve", fontsize=14)
-    ax3.set_xlabel('Training size (m)')
-    ax3.set_ylabel('Score')
-    ax3.grid(True)
-    ax3.legend(loc="best")
-    print('-'*60)
+    print("Support vector classifier ...")
+    ax3.set_title("Support vector classifier Learning Curve", fontsize=14)
+    plot_learning_curve_per_ax(estimator3, ax3, X, y)
 
     # Fourth Estimator
     print('-'*60)
-    print("Secision Tree Classifier ...")
-    train_sizes, train_scores, test_scores = learning_curve(
-        estimator4, X, y, cv=cv, n_jobs=n_jobs, train_sizes=train_sizes)
-    print("Learning curve completely.")
-    train_scores_mean = np.mean(train_scores, axis=1)
-    train_scores_std = np.std(train_scores, axis=1)
-    test_scores_mean = np.mean(test_scores, axis=1)
-    test_scores_std = np.std(test_scores, axis=1)
-    print("train size: ", train_sizes)
-    print("train_scores_mean: ", train_scores_mean)
-    print("train_scores_std: ", train_scores_std)
-    print("test_scores_mean: ", test_scores_mean)
-    print("test_scores_std: ", test_scores_std)
-    ax4.fill_between(train_sizes, train_scores_mean - train_scores_std,
-                     train_scores_mean + train_scores_std, alpha=0.1,
-                     color="#ff9124")
-    ax4.fill_between(train_sizes, test_scores_mean - test_scores_std,
-                     test_scores_mean + test_scores_std, alpha=0.1, color="#2492ff")
-    ax4.plot(train_sizes, train_scores_mean, 'o-', color="#ff9124",
-             label="Training score")
-    ax4.plot(train_sizes, test_scores_mean, 'o-', color="#2492ff",
-             label="Cross-validation score")
-    ax4.set_title("Decision Tree Classifier \n Learning Curve", fontsize=14)
-    ax4.set_xlabel('Training size (m)')
-    ax4.set_ylabel('Score')
-    ax4.grid(True)
-    ax4.legend(loc="best")
-    print('-'*60)
+    print("Decision Tree Classifier")
+    ax4.set_title("Decision Tree Classifier Learning Curve", fontsize=14)
+    plot_learning_curve_per_ax(estimator4, ax4, X, y)
+
     plt.savefig("/home/hoangnv68/BankFraudDetection/image_evaluation/learningCurve.png")
-    plt.cla()
     print("visualize learning in BankFraudDetection/image_evaluation/learningCurve.png")
 
 def graph_roc_curve_multiple(log_fpr, log_tpr, knear_fpr, knear_tpr, svc_fpr, svc_tpr, \
         tree_fpr, tree_tpr, y_train, log_reg_pred, knears_pred, svc_pred, tree_pred):
+    plt.cla()
     plt.figure(figsize=(16,8))
     plt.title('ROC Curve \n Top 4 Classifiers', fontsize=18)
     plt.plot(log_fpr, log_tpr, label='Logistic Regression Classifier Score: {:.4f}'\
@@ -235,7 +133,6 @@ def graph_roc_curve_multiple(log_fpr, log_tpr, knear_fpr, knear_tpr, svc_fpr, sv
                 )
     plt.legend()
     plt.savefig("/home/hoangnv68/BankFraudDetection/image_evaluation/ROCCurve.png")
-    plt.cla()
     print("Visualize ROC Curve in /BankFraudDetection/image_evaluation/ROCCurve.png")
 
 def undersample(df:pd.core.frame.DataFrame):

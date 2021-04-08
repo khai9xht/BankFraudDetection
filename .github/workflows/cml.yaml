@@ -1,0 +1,31 @@
+name: train machine learning model
+on: [push]
+jobs:
+  run:
+    runs-on: [ubuntu-latest]
+    container: docker://dvcorg/cml-py3:latest
+    steps:
+      - uses: action/checkout@v2
+      - namr: cml_run
+        env:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+        run: | 
+          pip install -r requirements.txt
+          python data_analysis.py
+          cd supervise_model
+          python MLModel.py
+          python roc_curve.py
+          python evaluate.py
+          cd ../NN_model
+          python train.py
+          cd ../cluster
+
+          cml-publish image_evaluation/correlation_matrix.png --md >> report.md
+          cml-publish image_evaluation/clustering.png --md >> report.md
+          cml-publish image_evaluation/Class_Neg_Correl.png --md >> report.md
+          cml-publish image_evaluation/Class_Pos_Correl.png --md >> report.md
+          cml-publish image_evaluation/confusion_matrix.png --md >> report.md
+          cml-publish image_evaluation/learningCurve.png --md >> report.md
+          cml-publish image_evaluation/ROCCurve.png --md >> report.md
+
+          cml-send-comment report.md
